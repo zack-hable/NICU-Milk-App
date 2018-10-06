@@ -373,3 +373,15 @@ body.sidebar-toggled footer.sticky-footer {
     width: calc(100% - 90px);
   }
 }
+
+.btn {
+    font-size: 1.5em;
+}
+.centered-container {
+    width: 80%;
+    margin-left:10%;
+}
+
+.thaw-warning {
+    display:hidden;
+}
