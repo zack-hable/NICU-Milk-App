@@ -22,6 +22,9 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+
 
   </head>
 
@@ -29,13 +32,13 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="index.html">Start Bootstrap</a>
+      <a class="navbar-brand mr-1" href="index.html">NICU App</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
       </button>
 
-      <!-- Navbar Search -->
+      <!-- Navbar Search
       <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
@@ -47,7 +50,6 @@
         </div>
       </form>
 
-      <!-- Navbar -->
       <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -85,7 +87,7 @@
           </div>
         </li>
       </ul>
-
+ -->
     </nav>
 
     <div id="wrapper">
@@ -115,18 +117,34 @@
         <div class="container-fluid">
 
           <!-- DataTables Example -->
-          <form action="#">
-
-              <div class="form-group">
-                  <label for="babyID">Baby ID: </label>
-                  <input type="number" min="0" max="45" id="babyID">
+          <div class="centered-container">
+              <form action="POST">
+                  <div class="form-group">
+                      <label for="babyName">Baby Name: </label>
+                      <input type="text" id="babyName">
+                  </div>
+                  <div class="form-group">
+                      <label for="dateT">Date &amp; Time: </label>
+                      <input size="16" type="text" class="form_datetime" id="dateT" value="2018-06-15 14:45" readonly>
+                  </div>
+                  <div class="form-group">
+                      <button id="add" type="submit" class="btn btn-primary" onclick="event.preventDefault();">Submit</button>
+                  </div>
+              </form>
+              <!-- Data Tables -->
+              <div class="card mb-3">
+                  <div class="card-header">
+                      <i class="fas fa-table"></i>
+                      Data Table Example</div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                          </table>
+                      </div>
+                  </div>
               </div>
-              <div class="form-group">
-                  <label for="sub">Submit</label>
-                  <input type="submit">
-              </div>
 
-          </form>
+          </div>
 
         </div>
         <!-- /.container-fluid -->
@@ -188,7 +206,32 @@
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
     <script src="js/demo/chart-area-demo.js"></script>
-
+    <script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.22/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+            $("#add").click(function(){
+                $.ajax({ url:"https://hack-this-help-kids-218609.appspot.com/api/baby",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                        method:"PUT",
+                        data: processInput(),
+                    success: function () { alert("sent");},
+                    error: function () {alert("error contacting server");}
+                    });
+            });
+        });
+function processInput() {
+    var nam = document.getElementById('babyName').value;
+    var dt = Date($("#dateT").datetimepicker('getDate'));
+    var origin = new Date(0);
+    var diff = dt - origin;
+    return { nextFeed: Math.floor(diff/1000), name: nam };
+    }
+    </script>
   </body>
 
 </html>
