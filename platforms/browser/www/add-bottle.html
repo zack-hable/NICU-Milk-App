@@ -129,7 +129,7 @@
                     <div class="card mb-3">
                         <div class="card-header">
                             <i class="fas fa-table"></i>
-                            Data Table Example</div>
+                            Add Bottle</div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -232,8 +232,8 @@
                         contentType: "application/json; charset=utf-8",
                         method:"PUT",
                         data: processInput(),
-                        success: function (message) {$("<div class='alert alert-success'>The bottle was added successfully</div>").insertBefore("#babyTop");},
-                        error: function (error) {console.log(error);}
+                        success: function (message) {insertSuccess("div.card-body");},
+                        error: function (e) {insertError("div.card-body", e);}
                     });
                 });
             });
@@ -250,6 +250,19 @@ function processInput() {
 
     return JSON.stringify({ baby: nam, available:am });
 }
+	insertSuccess = function(where) {
+		$(where).append('<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> The process has been successfully completed.</div>')
+	};
+	insertError = function(where, error) {
+		var errstr = "There was an unknown error!";
+		if (error.responseJSON && error.responseJSON.errors) {
+			errstr = "";
+			for (var key in error.responseJSON.errors) {
+				errstr += error.responseJSON.errors[key][0];
+			}
+		}
+		$(where).append('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Error!</strong> '+errstr+'</div>')
+	};
         </script>
 
     </body>
