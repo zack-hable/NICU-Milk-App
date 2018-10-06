@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Baby;
+use App\Bottle;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,11 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        // add the router binding for babies
+        Route::model('baby', Baby::class);
+        // add the router binding for bottles
+        Route::model('bottle', Bottle::class);
     }
 
     /**
