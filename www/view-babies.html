@@ -22,32 +22,21 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#refresh").click(function(){
-                $.post("some_file.asp",
-                    {
-                        var1: ,
-                        var2:
-                    },
-                    function (data,status){
-                        alert("Data: " + data + "\nStatus: " + status);
-                    });
-            });
-        });
-    </script>
+	
+	<!-- datatables -->
+	<link rel="stylesheet" type="text/css" href="datatables/datatables.min.css"/>
 
   </head>
 
   <body id="page-top">
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-
-      <a class="navbar-brand mr-1" href="index.html">NICU App</a>
-
-      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+	
+	  <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
       </button>
+
+      <a class="navbar-brand mr-1" href="index.html">NICU App</a>
 
       <!-- Navbar Search
       <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -137,21 +126,17 @@
 
         <div class="container-fluid">
 
-          <!-- DataTables Example -->
-          <div class="centered-container">
-              <div class="card mb-3">
-                  <div class="card-header">
-                      <i class="fas fa-table"></i>
-                      Data Table Example</div>
-                  <div class="card-body">
-                      <div class="table-responsive">
-                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                          </table>
-                      </div>
-                  </div>
-              </div>
-              <button class="btn btn-primary btn-block" id="refresh">Refresh</button>
-          </div>
+		  <div class="card mb-3">
+			  <div class="card-header">
+				  <i class="fas fa-table"></i>
+				  Babies</div>
+			  <div class="card-body">
+				  <div class="table-responsive">
+					  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+					  </table>
+				  </div>
+			  </div>
+		  </div>
 
         </div>
         <!-- /.container-fluid -->
@@ -202,17 +187,66 @@
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Page level plugin JavaScript-->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
-
-    <!-- Demo scripts for this page-->
-    <script src="js/demo/datatables-demo.js"></script>
-    <script src="js/demo/chart-area-demo.js"></script>
+	
+	<!-- datatables addon -->
+	<script type="text/javascript" src="datatables/datatables.min.js"></script>
+	<script src="js/dataTables.altEditor.free.min.js"></script>
+	<script>
+	$('#dataTable').DataTable({
+		ajax: {
+			url: 'http://hack-this-help-kids-218609.appspot.com/api/baby',
+			dataSrc: ''
+		},
+		dom: '<"row"<"col-md-4"l><"col-md-4"B><"col-md-4"f>>rt<"row"<"col-md-6"i><"col-md-6"p>>', // requires at least B (for buttons)
+		select: 'single',   // only allow single edits at a time
+		buttons: [{
+				extend: 'selected',     // Bind to Selected row
+				text: 'Delete',
+				name: 'delete',      // DO NOT change name (from AltEditor)
+				className: 'btn btn-danger'
+			},
+			{
+				text: 'Refresh',
+				name: 'refresh',     // DO NOT change name (from AltEditor)
+				className: 'btn btn-info'
+		}],
+		altEditor: true,            // enable our plugin
+		columns: [{
+				title: "ID",
+				data: "id",			// value sent to your callback (and read from AJAX)
+				type: "hidden",		// input type
+			},
+			{
+				title: "Name",
+				data: "name",
+				type: "text",
+			},
+			{
+				title: "Next Feed Time",
+				data: "nextFeed",
+				type: "readonly",
+			}
+		],
+		onDeleteRow: function(tableObj, info, cb) { // callback when a row is deleted on the table
+			$.ajax({
+				url: '',
+				type: 'DELETE',
+				data: info,
+				success: function(result) {
+					// display some message to the user
+					// perform callback
+					cb(result);
+				},
+				error: function(result) {
+					// perform callback
+					cb(result);
+				}
+			});
+		}
+	});
+	</script>
 
   </body>
 

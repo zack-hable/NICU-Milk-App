@@ -230,13 +230,18 @@
                     contentType: "application/json; charset=utf-8",
                         method:"PUT",
                         data: processInput(),
+<<<<<<< HEAD
                     success: function () {$("<div class='alert alert-success'>The baby was added successfully</div>").insertBefore("#babyName");},
+=======
+                    success: function () { alert("sent");},
+>>>>>>> 8ec71d6d9af4cd85cb84a2241be3713ff482eedd
                     error: function () {alert("error contacting server");}
                     });
             });
         });
 function processInput() {
     var nam = document.getElementById('babyName').value;
+<<<<<<< HEAD
     if (nam == "")
     {
         if ($(".alert-danger").length == 0) {
@@ -246,6 +251,9 @@ function processInput() {
     }
 
     var dt = $("#dateT").datetimepicker('getDate');
+=======
+    var dt = Date($("#dateT").datetimepicker('getDate'));
+>>>>>>> 8ec71d6d9af4cd85cb84a2241be3713ff482eedd
     var origin = new Date(0);
     var diff = dt - origin;
     return { nextFeed: Math.floor(diff/1000), name: nam };
