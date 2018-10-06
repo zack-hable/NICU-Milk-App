@@ -22,25 +22,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
-    <script type="text/javascript">
-    function processInput() {
-            $(document).ready(function(){
-            $("#refresh").click(function(){
-                $.post("some_file.asp",
-                    {
-                        var1: ,
-                        var2:
-                    },
-                    function (data,status){
-                        alert("Data: " + data + "\nStatus: " + status);
-                    });
-            });
-        });
-
-            var idnum = $('#babyID').value;
-        }
-    </script>
-  </head>
+      </head>
 
   <body id="page-top">
 
@@ -138,18 +120,7 @@
       </ul>
       <div id="content-wrapper">
 
-        <div class="container-fluid">
-          <!-- DataTables Example -->
-          <div class="centered-container">
-              <form action="POST">
-                  <div class="form-group">
-                      <label for="babyID">Baby ID: </label>
-                      <input type="number" min="0" max="45" id="babyID">
-                  </div>
-                  <div class="form-group">
-                      <button class="btn btn-primary" type="submit" onclick="event.preventDefault(); processInput();">Submit</button>
-                  </div>
-              </form>
+          <div class="container-fluid">
               <!-- DataTables Example -->
               <div class="card mb-3">
                   <div class="card-header">
@@ -158,13 +129,30 @@
                   <div class="card-body">
                       <div class="table-responsive">
                           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                              <form action="#">
+                                  <div class="form-group">
+                                      <div class="offset-md-2 col-md-4">
+                                          <div align="center">
+                                              <label for="babyID">Baby ID: </label>
+                                              <input type="number" min="0" max="45" id="babyID">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <div class="offset-md-2 col-md-4">
+                                          <div align="center">
+                                              <button class="btn btn-primary" id="sub" type="submit" onclick="event.preventDefault();">Submit</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </form>
+
                           </table>
                       </div>
                   </div>
               </div>
           </div>
 
-        </div>
         <!-- /.container-fluid -->
 
         <!-- Sticky Footer -->
@@ -225,6 +213,30 @@
     <script src="js/demo/datatables-demo.js"></script>
     <script src="js/demo/chart-area-demo.js"></script>
 
+<script type="text/javascript">
+      $(document).ready(function(){
+            $("#sub").click(function(){
+                $.ajax({ url:"https://hack-this-help-kids-218609.appspot.com/api/baby/"+processInput(),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    method:"DELETE",
+                    success: function (message) {$("<div class='alert alert-success'>The baby was removed successfully</div>").insertBefore("#babyID");},
+                    error: function () {alert("unable to reach server");}
+                    });
+            });
+        });
+function processInput() {
+    var id = document.getElementById('babyID').value;
+    alert(id);
+    if (id == "")
+    {
+        if ($(".alert-danger").length == 0) {
+            $("<div class='alert alert-danger '>You used a blank ID.</div>").insertBefore("#babyID");
+        }
+        return;
+    }
+    return id;
+    }
+    </script>
   </body>
-
 </html>
