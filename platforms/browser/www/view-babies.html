@@ -17,9 +17,6 @@
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
 	
@@ -115,11 +112,15 @@
               <i class="fas fa-fw fa-trash"></i>
             <span>Remove Baby</span></a>
         </li>
-
         <li class="nav-item">
           <a class="nav-link" href="view-babies.html">
             <i class="fas fa-fw fa-table"></i>
             <span>View Babies</span></a>
+        </li>
+		<li class="nav-item">
+          <a class="nav-link" href="view-bottle.html">
+            <i class="fas fa-fw fa-search"></i>
+            <span>Find Bottle</span></a>
         </li>
       </ul>
       <div id="content-wrapper">
@@ -216,6 +217,7 @@
 		columns: [{
 				title: "ID",
 				data: "id",			// value sent to your callback (and read from AJAX)
+				id: 'id',
 				type: "hidden",		// input type
 			},
 			{
@@ -229,11 +231,12 @@
 				type: "readonly",
 			}
 		],
-		onDeleteRow: function(tableObj, info, cb) { // callback when a row is deleted on the table
+		onDeleteRow: function(info, cb) { // callback when a row is deleted on the table
+			bid = info['id'];
+			console.log(info);
 			$.ajax({
-				url: '',
+				url: 'http://hack-this-help-kids-218609.appspot.com/api/baby/'+bid,
 				type: 'DELETE',
-				data: info,
 				success: function(result) {
 					// display some message to the user
 					// perform callback
