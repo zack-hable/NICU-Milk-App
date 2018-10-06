@@ -1,0 +1,13 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Coordinate extends Model
+{
+    public function bottles()
+    {
+        return $this->hasMany("App\Bottle", "coordinate_id", "id");
+    }
+}

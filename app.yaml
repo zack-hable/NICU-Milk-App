@@ -1,0 +1,24 @@
+runtime: php
+env: flex
+
+runtime_config:
+  document_root: public
+
+# Ensure we skip ".env", which is only for local development
+skip_files:
+  - .env
+
+env_variables:
+  # Put production environment variables here.
+  APP_LOG: 'syslog'
+  APP_KEY: 'base64:GQbrWy1/ItoWwUJBwst8dpQe/Gs6X5Y5XzDVI4RrOGM='
+  STORAGE_DIR: /tmp
+  CACHE_DRIVER: database
+  SESSION_DRIVER: database
+  DB_HOST: localhost
+  DB_DATABASE: homestead
+  DB_USERNAME: root
+  DB_PASSWORD: JxgRQJD2E2PhTaGK
+  DB_SOCKET: "/cloudsql/hack-this-help-kids-218609:us-east1:hack-this-help-kids-sql"
+beta_settings:
+  cloud_sql_instances: "hack-this-help-kids-218609:us-east1:hack-this-help-kids-sql" 

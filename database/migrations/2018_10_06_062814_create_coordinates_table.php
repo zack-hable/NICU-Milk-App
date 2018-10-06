@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBottlesTable extends Migration
+class CreateCoordinatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateBottlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('bottles', function (Blueprint $table) {
+        Schema::create('coordinates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('baby_id');
-            $table->integer('coordinate_id');
-            $table->integer('available');
-            $table->smallInteger('location');
-            $table->timestamp('lastMoved');
+            $table->string("shelf");
+            $table->integer("column");
+            $table->integer("location_id");
+            $table->integer("space_used");
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateBottlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bottles');
+        Schema::dropIfExists('coordinates');
     }
 }

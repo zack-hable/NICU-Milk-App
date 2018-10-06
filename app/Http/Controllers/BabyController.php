@@ -15,8 +15,15 @@ class BabyController extends Controller
 
     public function listBottle(Baby $baby)
     {
-        $bottles = $baby->bottles()->get();
+        $bottles = $baby->bottles;
         return response()->json($bottles);
+    }
+
+    public function bestBottle(Baby $baby)
+    {
+        // return the best bottle for the baby
+        $bottles = $baby->best_bottles;
+        return response()->json($bottles[0]);
     }
 
     public function insert(Request $request)

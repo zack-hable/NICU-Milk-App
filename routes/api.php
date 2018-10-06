@@ -21,6 +21,8 @@ use Illuminate\Http\Request;
     Route::prefix('baby')->group(function () {
         // return all of the babies
         Route::get('', 'BabyController@listAll');
+        // get the recommended bottle for a baby
+        Route::get('{baby}/bottle/best', 'BabyController@bestBottle');
         // returns a specific baby's bottles
         Route::get('{baby}/bottle', 'BabyController@listBottle');
         // add a new baby
