@@ -23,7 +23,13 @@ class BabyController extends Controller
     {
         // return the best bottle for the baby
         $bottles = $baby->best_bottles;
-        return response()->json($bottles[0]);
+        if (count($bottles) == 0)
+        {
+            return response()->json(['success'=>false, 'responseJSON'=>['errors'=>['There are no bottles for this patient.']]]);
+        }
+        // get that bottles coordinates
+        $coord = $bottles[0]->coordinate;
+        return response()->json(['bottle'=>$bottles[0], 'coordinate'=>$coord]);
     }
 
     public function insert(Request $request)
