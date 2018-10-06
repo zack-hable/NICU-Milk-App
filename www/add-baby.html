@@ -219,14 +219,22 @@
                     contentType: "application/json; charset=utf-8",
                         method:"PUT",
                         data: processInput(),
-                    success: function () { alert("sent");},
+                    success: function () {$("<div class='alert alert-success'>The baby was added successfully</div>").insertBefore("#babyName");},
                     error: function () {alert("error contacting server");}
                     });
             });
         });
 function processInput() {
     var nam = document.getElementById('babyName').value;
-    var dt = Date($("#dateT").datetimepicker('getDate'));
+    if (nam == "")
+    {
+        if ($(".alert-danger").length == 0) {
+            $("<div class='alert alert-danger '>You used a blank name.</div>").insertBefore("#babyName");
+        }
+        return;
+    }
+
+    var dt = $("#dateT").datetimepicker('getDate');
     var origin = new Date(0);
     var diff = dt - origin;
     return { nextFeed: Math.floor(diff/1000), name: nam };
