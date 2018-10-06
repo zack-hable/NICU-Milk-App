@@ -10,7 +10,6 @@
     <meta name="author" content="">
 
     <title>SB Admin - Dashboard</title>
-
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -32,11 +31,11 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="index.html">NICU App</a>
-
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
       </button>
+
+      <a class="navbar-brand mr-1" href="index.html">NICU App</a>
 
       <!-- Navbar Search
       <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -230,18 +229,13 @@
                     contentType: "application/json; charset=utf-8",
                         method:"PUT",
                         data: processInput(),
-<<<<<<< HEAD
-                    success: function () {$("<div class='alert alert-success'>The baby was added successfully</div>").insertBefore("#babyName");},
-=======
-                    success: function () { alert("sent");},
->>>>>>> 8ec71d6d9af4cd85cb84a2241be3713ff482eedd
-                    error: function () {alert("error contacting server");}
+                    success: function (message) {$("<div class='alert alert-success'>The baby was added successfully</div>").insertBefore("#babyName");},
+                    error: function () {alert("unable to reach server");}
                     });
             });
         });
 function processInput() {
     var nam = document.getElementById('babyName').value;
-<<<<<<< HEAD
     if (nam == "")
     {
         if ($(".alert-danger").length == 0) {
@@ -251,12 +245,9 @@ function processInput() {
     }
 
     var dt = $("#dateT").datetimepicker('getDate');
-=======
-    var dt = Date($("#dateT").datetimepicker('getDate'));
->>>>>>> 8ec71d6d9af4cd85cb84a2241be3713ff482eedd
     var origin = new Date(0);
     var diff = dt - origin;
-    return { nextFeed: Math.floor(diff/1000), name: nam };
+    return JSON.stringify({ nextFeed: Math.floor(diff/1000), name: nam });
     }
     </script>
   </body>
