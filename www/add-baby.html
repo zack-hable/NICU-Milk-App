@@ -247,7 +247,7 @@ function processInput() {
     var dt = $("#dateT").datetimepicker('getDate');
     var origin = new Date(0);
     var diff = dt - origin;
-    return Json.stringify({ nextFeed: Math.floor(diff/1000), name: nam });
+    return JSON.stringify({ nextFeed: Math.floor(diff/1000), name: nam });
     }
     </script>
   </body>
