@@ -226,7 +226,7 @@
         });
 function processInput() {
     var nam = document.getElementById('babyName').value;
-    var dt = Date($("#dateT").datetimepicker('getDate'));
+    var dt = $("#dateT").datetimepicker('getDate');
     var origin = new Date(0);
     var diff = dt - origin;
     return { nextFeed: Math.floor(diff/1000), name: nam };
