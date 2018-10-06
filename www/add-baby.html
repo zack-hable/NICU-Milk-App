@@ -215,6 +215,8 @@
       $(document).ready(function(){
             $("#add").click(function(){
                 $.ajax({ url:"https://hack-this-help-kids-218609.appspot.com/api/baby",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
                         method:"PUT",
                         data: processInput(),
                     success: function () { alert("sent");},
