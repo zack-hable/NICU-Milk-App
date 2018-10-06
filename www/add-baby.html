@@ -10,7 +10,6 @@
     <meta name="author" content="">
 
     <title>SB Admin - Dashboard</title>
-
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -248,7 +247,7 @@ function processInput() {
     var dt = $("#dateT").datetimepicker('getDate');
     var origin = new Date(0);
     var diff = dt - origin;
-    return { nextFeed: Math.floor(diff/1000), name: nam };
+    return Json.stringify({ nextFeed: Math.floor(diff/1000), name: nam });
     }
     </script>
   </body>
