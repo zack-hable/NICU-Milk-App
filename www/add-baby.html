@@ -229,8 +229,8 @@
                     contentType: "application/json; charset=utf-8",
                         method:"PUT",
                         data: processInput(),
-                    success: function () {$("<div class='alert alert-success'>The baby was added successfully</div>").insertBefore("#babyName");},
-                    error: function () {alert("error contacting server");}
+                    success: function (message) {$("<div class='alert alert-success'>The baby was added successfully</div>").insertBefore("#babyName");},
+                    error: function () {alert("unable to reach server");}
                     });
             });
         });
