@@ -115,11 +115,15 @@
               <i class="fas fa-fw fa-trash"></i>
             <span>Remove Baby</span></a>
         </li>
-
         <li class="nav-item">
           <a class="nav-link" href="view-babies.html">
             <i class="fas fa-fw fa-table"></i>
             <span>View Babies</span></a>
+        </li>
+		<li class="nav-item">
+          <a class="nav-link" href="view-bottle.html">
+            <i class="fas fa-fw fa-search"></i>
+            <span>Find Bottle</span></a>
         </li>
       </ul>
       <div id="content-wrapper">
@@ -133,17 +137,20 @@
 			  <div class="card-body">
 					<div class="row">
 						<div class="col-md-4 offset-md-4">
-							<select name="baby" id="baby" style="width: 100%" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+							<select name="baby" id="baby" style="width: 100%">
 								<option></option>
-							<option value="4">test</option><option value="5">abc</option></select><span class="select2 select2-container select2-container--bootstrap4 select2-container--below" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-baby-container"><span class="select2-selection__rendered" id="select2-baby-container" title="abc">abc</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+							</select>
 						</div>
 				  </div>
+				  <br>
 				  <div id="approval" class="row hidden">
 					<div class="col-md-4 offset-md-4">
-						<p>
-							Please use bottle #<span id="bottle_id">18</span> in location <span id="location">0</span> at coordinate <span id="coordinate"></span> and then click confirm after removing it!
-						</p>
-						<button class="btn btn-primary" id="approve">Confirm</button>
+						<div align="center">
+							<p>
+								Please use bottle #<span id="bottle_id">18</span> in location <span id="location">0</span> at coordinate <span id="coordinate"></span> and then click confirm after removing it!
+							</p>
+							<button class="btn btn-primary" id="approve">Confirm</button>
+						</div>
 					</div>
 				  </div>
 			  </div>
@@ -212,6 +219,7 @@
 				// close approval area
 				if (!$("div#approval").hasClass("hidden")) {
 					$("div#approval").addClass("hidden");
+					$("span#bottle_id").text('');
 				}
 				console.log(babies);
 				// insert babies into select
@@ -223,7 +231,8 @@
 				// enable select
 				$("select#baby").select2({theme: 'bootstrap4', placeholder: 'Search for a child...'});
 			},
-            error: function () {
+            error: function (e) {
+				insertError("div.card-body", e);
 			}
     });
 	$("select#baby").change(function () {
@@ -242,7 +251,8 @@
 				// enable area
 				$("div#approval").removeClass("hidden");
 			},
-            error: function () {
+            error: function (e) {
+				insertError("div.card-body", e);
 			}
 		});
 	});
@@ -257,12 +267,26 @@
             method: "DELETE",
             success: function (bottleInfo) {
 				console.log(bottleInfo);
-				
+				insertSuccess("div.card-body");
 			},
-            error: function () {
+            error: function (e) {
+				insertError("div.card-body", e);
 			}
 		});
 	});
+	insertSuccess = function(where) {
+		$(where).append('<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> The process has been successfully completed.</div>')
+	};
+	insertError = function(where, error) {
+		var errstr = "There was an unknown error!";
+		if (error.responseJSON && error.responseJSON.errors) {
+			errstr = "";
+			for (var key in error.responseJSON.errors) {
+				errstr += error.responseJSON.errors[key][0];
+			}
+		}
+		$(where).append('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Error!</strong> '+errstr+'</div>')
+	};
 	</script>
 
   
