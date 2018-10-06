@@ -22,7 +22,24 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
+    <script type="text/javascript">
+    function processInput() {
+            $(document).ready(function(){
+            $("#refresh").click(function(){
+                $.post("some_file.asp",
+                    {
+                        var1: ,
+                        var2:
+                    },
+                    function (data,status){
+                        alert("Data: " + data + "\nStatus: " + status);
+                    });
+            });
+        });
 
+            var idnum = $('#babyID').value;
+        }
+    </script>
   </head>
 
   <body id="page-top">
@@ -120,7 +137,7 @@
                       <input type="number" min="0" max="45" id="babyID">
                   </div>
                   <div class="form-group">
-                      <button class="btn btn-primary" type="submit">Submit</button>
+                      <button class="btn btn-primary" type="submit" onclick="event.preventDefault(); processInput();">Submit</button>
                   </div>
               </form>
               <!-- DataTables Example -->

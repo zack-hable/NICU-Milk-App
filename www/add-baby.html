@@ -22,6 +22,9 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+
 
   </head>
 
@@ -121,7 +124,11 @@
                       <input type="text" id="babyName">
                   </div>
                   <div class="form-group">
-                      <button type="submit" class="btn btn-primary">Submit</button>
+                      <label for="dateT">Date &amp; Time: </label>
+                      <input size="16" type="text" class="form_datetime" id="dateT" value="2018-06-15 14:45" readonly>
+                  </div>
+                  <div class="form-group">
+                      <button id="add" type="submit" class="btn btn-primary" onclick="event.preventDefault();">Submit</button>
                   </div>
               </form>
               <!-- Data Tables -->
@@ -199,7 +206,30 @@
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
     <script src="js/demo/chart-area-demo.js"></script>
-
+    <script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.22/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+            $("#add").click(function(){
+                $.ajax({ url:"https://hack-this-help-kids-218609.appspot.com/api/baby",
+                        method:"PUT",
+                        data: processInput(),
+                    success: function () { alert("sent");},
+                    error: function () {alert("error contacting server");}
+                    });
+            });
+        });
+function processInput() {
+    var nam = document.getElementById('babyName').value;
+    var dt = Date($("#dateT").datetimepicker('getDate'));
+    var origin = new Date(0);
+    var diff = dt - origin;
+    return { nextFeed: Math.floor(diff/1000), name: nam };
+    }
+    </script>
   </body>
 
 </html>
